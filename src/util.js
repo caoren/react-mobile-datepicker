@@ -81,24 +81,80 @@ export const getCurrentMonthLastDay = (year, month) => {
     let lastDate = new Date(cdate.getTime() - ONEDAY);
     return lastDate.getDate();
 }
+//重置min
+export function resetMin({type, minDate, firstType, firstValue}){
+    let result = '';
+    let isMin = minDate[firstType] == firstValue;
+    switch(type){
+        case 'hour':
+            result = isMin ? minDate.hour : 0;
+            break;
+        case 'minute':
+            result = isMin ? minDate.minute : 0;
+            break;
+        case 'second':
+            result = isMin ? minDate.second : 0;
+            break;
+        case 'month':
+            result = isMin ? minDate.month : 1;
+            break;
+        case 'date':
+            result = isMin ? minDate.date : 1;
+            break;
+        default:
+            result = '';
+            break;
+    }
+    return result;
+}
+//重置max
+export function resetMax({type, maxDate, firstType, firstValue, dateMax}){
+    let result = '';
+    let isMax = maxDate[firstType] == firstValue;
+    switch(type){
+        case 'hour':
+            result = isMax ? maxDate.hour : 23;
+            break;
+        case 'minute':
+            result = isMax ? maxDate.minute : 59;
+            break;
+        case 'second':
+            result = isMax ? maxDate.second : 59;
+            break;
+        case 'month':
+            result = isMax ? maxDate.month : 12;
+            break;
+        case 'date':
+            result = isMax ? maxDate.date : dateMax;
+            break;
+        default:
+            result = '';
+            break;
+    }
+    return result;
+}
 //根据type生成对应的min
-export function getMin(type, curTime){
+export function getMin({type, curTime, yearRange, date}){
     type = getTypeByKey(type);
     let result = '';
     switch(type){
         case 'hour':
+            result = date ? date.hour : 0;
+            break;
         case 'minute':
+            result = date ? date.minute : 0;
+            break;
         case 'second':
-            result = 0;
+            result = date ? date.second : 0;
             break;
         case 'month':
-            result = 1;
+            result = date ? date.month : 1;
             break;
         case 'date':
-            result = 1;
+            result = date ? date.date : 1;
             break;
         case 'year':
-            result = curTime.year - 10;
+            result = date ? date.year : (curTime.year - yearRange);
             break;
         default:
             result = '';
@@ -107,25 +163,27 @@ export function getMin(type, curTime){
     return result;
 }
 //根据type生成对应的max
-export function getMax(type, curTime){
+export function getMax({type, curTime, yearRange, date}){
     type = getTypeByKey(type);
     let result = '';
     switch(type){
         case 'hour':
-            result = 23;
+            result = date ? date.hour : 23;
             break;
         case 'minute':
+            result = date ? date.minute : 59;
+            break;
         case 'second':
-            result = 59;
+            result = date ? date.second : 59;
             break;
         case 'month':
-            result = 12;
+            result = date ? date.month : 12;
             break;
         case 'date':
-            result = getCurrentMonthLastDay(curTime.year, curTime.month);
+            result = date ? date.date : getCurrentMonthLastDay(curTime.year, curTime.month);
             break;
         case 'year':
-            result = curTime.year + 10;
+            result = date ? date.year : (curTime.year + yearRange);
             break;
         default:
             result = '';
@@ -168,7 +226,7 @@ export const getForm = (format) => {
     }
 }
 //根据format格式输出对应的数组
-export const getTimePoint = ({times, minuteStep, formats, curTime}) => {
+export const getTimePoint = ({times, minuteStep, yearRange, formats, curTime, minDate, maxDate}) => {
     let arr = [];
     for(let i=0,len=times.length;i<len;i++){
         let temp = SplitDate(times[i]);
@@ -179,8 +237,8 @@ export const getTimePoint = ({times, minuteStep, formats, curTime}) => {
             let ttype = getTypeByKey(formArr[j]);
             tarr.push({
                 value : temp[formArr[j]],
-                min : getMin(formArr[j], curTime),
-                max : getMax(formArr[j], curTime),
+                min : getMin({type : formArr[j], curTime, yearRange, date : minDate}),
+                max : getMax({type : formArr[j], curTime, yearRange, date : maxDate}),
                 step : ttype == 'minute' ? minuteStep : 1,
                 suffix : textArr[j] || '',
                 type : ttype

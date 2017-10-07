@@ -13,7 +13,7 @@ class Test extends Component{
         this.save = this.save.bind(this);
     }
     save(result){
-        let text = result[0].text;
+        let text = result.text;
         this.setState({
             text
         });
@@ -31,7 +31,7 @@ class Test extends Component{
                 <p>
                     {text}
                 </p>
-                <DateView onDone={this.save} format="{YYYY}年{MM}月{DD}日" ref={(ref) => {this.date = ref}}></DateView>
+                <DateView onDone={this.save} format="{YYYY}年{MM}月{DD}日 {hh}时{mm}分{ss}秒" ref={(ref) => {this.date = ref}} yearRange={3}></DateView>
             </div>
         )
     }

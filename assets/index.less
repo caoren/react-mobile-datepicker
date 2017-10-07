@@ -105,10 +105,17 @@
     opacity:1;
     transition:opacity 300ms ease-in-out;
 }
-.timemask-leave{
+.timemask-appear{
+    opacity:0.1;
+}
+.timemask-appear.timemask-appear-active{
+    opacity:1;
+    transition:opacity 300ms ease-in-out;
+}
+.timemask-exit{
     opacity:1;
 }
-.timemask-leave.timemask-leave-active {
+.timemask-exit.timemask-exit-active {
     opacity:0.1;
     transition:opacity 300ms ease-in-out;
 }
@@ -119,10 +126,17 @@
     transform:translate3d(0,0,0);
     transition:transform 300ms ease-in-out;
 }
-.timecont-leave{
+.timecont-appear{
+    transform:translate3d(0,100%,0);
+}
+.timecont-appear.timecont-appear-active{
+    transform:translate3d(0,0,0);
+    transition:transform 300ms ease-in-out;
+}
+.timecont-exit{
     transform:translate3d(0,0,0);
 }
-.timecont-leave.timecont-leave-active {
+.timecont-exit.timecont-exit-active {
     transform:translate3d(0,100%,0);
     transition:transform 300ms ease-in-out;
 }
