@@ -1,6 +1,6 @@
 {
   "name": "react-mobile-timepicker",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A componet named datepicker for React",
   "main": "lib/index.js",
   "author": "Caoren <caor1987@gmail.com>",
@@ -12,6 +12,7 @@
   "license": "MIT",
   "devDependencies": {
     "autoprefixer": "^6.5.3",
+    "babel-cli": "^6.26.0",
     "babel-core": "^6.5.2",
     "babel-loader": "^6.2.3",
     "babel-plugin-transform-runtime": "^6.23.0",
@@ -47,7 +48,7 @@
     "dev": "webpack-dev-server --port 7909 --content-base demo/ --config demo/webpack.config.js --progress --hot --inline"
   },
   "dependencies": {
-    "react-iscroll": "^1.0.2",
-    "iscroll": "^5.2.0"
+    "iscroll": "^5.2.0",
+    "react-iscroll": "^2.0.3"
   }
 }
